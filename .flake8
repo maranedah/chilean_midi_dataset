@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203, S101, C408, N806, DAR401, N803
+docstring_style=numpy
+requirements-max-depth=5
+
+[darglint]
+docstring_style=numpy
