@@ -1,11 +1,13 @@
 import os
 import muspy
+from pathlib import PurePath
 
 def merge_tracks(
 	input_path: str,
-	song_name: str,
 	output_path: str
 ):
+	path = PurePath(input_path)
+	song_name = f"{path.parent.parent.name} - {path.name}"
 	files = [os.path.join(input_path, f) for f in os.listdir(input_path) if f.split(".")[-1] =="mid"]
 	if len(files) < 2:
 		return
@@ -29,6 +31,5 @@ def merge_tracks(
 		if "drum" in f.lower():
 			track.is_drum = True
 		song.tracks.append(track)
-
 	song.write(os.path.join(output_path, song_name+".mid"))
 
