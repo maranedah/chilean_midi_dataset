@@ -1,0 +1,47 @@
+{
+	"tempos":[
+		{"tempo":83, "measure":1}
+	],
+	"time_signatures":[
+		{"time_signature":"3/16", "measure":1},
+
+		{"time_signature":"7/8", "measure":2},
+		{"time_signature":"6/8", "measure":3},
+		{"time_signature":"7/8", "measure":4},
+		{"time_signature":"6/8", "measure":5},
+		{"time_signature":"7/8", "measure":6},
+		{"time_signature":"6/8", "measure":7},
+		{"time_signature":"7/8", "measure":8},
+		{"time_signature":"6/8", "measure":9},
+		
+		{"time_signature":"4/8", "measure":10},
+
+		{"time_signature":"7/8", "measure":84},
+		{"time_signature":"6/8", "measure":85},
+		{"time_signature":"7/8", "measure":86},
+		{"time_signature":"6/8", "measure":87},
+		
+		{"time_signature":"4/8", "measure":88},
+
+		{"time_signature":"8/8", "measure":134},
+		{"time_signature":"9/8", "measure":135},
+		{"time_signature":"8/8", "measure":136},
+		{"time_signature":"9/8", "measure":137},
+		
+		{"time_signature":"7/8", "measure":138},
+		{"time_signature":"6/8", "measure":139},
+		{"time_signature":"7/8", "measure":140},
+		{"time_signature":"6/8", "measure":141},
+		{"time_signature":"7/8", "measure":142},
+		{"time_signature":"6/8", "measure":143},
+		{"time_signature":"7/8", "measure":144},
+		{"time_signature":"6/8", "measure":145},
+		{"time_signature":"7/8", "measure":146},
+		{"time_signature":"6/8", "measure":147},
+		{"time_signature":"7/8", "measure":148},
+		{"time_signature":"6/8", "measure":149},
+		
+		{"time_signature":"4/8", "measure":150}
+	],
+	"last_measure": 189
+}
