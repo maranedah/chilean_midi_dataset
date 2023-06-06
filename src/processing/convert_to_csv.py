@@ -22,7 +22,7 @@ def get_measure_length(song, time):
         for ts in song.time_signatures
         if ts.time <= time
     ]
-    return ordered_ts[-1]
+    return int(ordered_ts[-1])
 
 
 def muspy_to_df(song):
@@ -55,4 +55,5 @@ if __name__ == "__main__":
     song = muspy.read_midi("../../data/raw/Super Especial - Evasiva.mid")
     song = song.adjust_resolution(16)
     df = muspy_to_df(song)
+    asd = df[["track", "measure", "relative_position", "duration", "pitch"]].to_numpy()
     breakpoint()
