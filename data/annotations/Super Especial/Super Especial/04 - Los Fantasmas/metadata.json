@@ -1,9 +1,9 @@
 {
 	"tempos":[
-		{"tempo":179, "measure":1}
+		{"tempo":88, "measure":1}
 	],
 	"time_signatures":[
 		{"time_signature":"4/4", "measure":1}
 	],
-	"last_measure": 160
+	"last_measure": 179
 }
