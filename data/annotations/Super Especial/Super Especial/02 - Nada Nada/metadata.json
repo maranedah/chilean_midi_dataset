@@ -5,12 +5,12 @@
 	],
 	"time_signatures":[
 		{"time_signature":"3/8", "measure":1},
-		
+
 		{"time_signature":"6/4", "measure":2},
 		{"time_signature":"7/4", "measure":3},
 		{"time_signature":"6/4", "measure":4},
 		{"time_signature":"7/4", "measure":5},
-		
+
 		{"time_signature":"6/4", "measure":6},
 		{"time_signature":"7/4", "measure":7},
 		{"time_signature":"6/4", "measure":8},
