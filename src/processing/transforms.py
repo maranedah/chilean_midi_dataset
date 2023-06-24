@@ -4,7 +4,7 @@ from pathlib import PurePath
 
 import muspy
 
-from .compute_positions import get_tempos, get_time_signatures
+from .quantizer import MuspyWithMeasures
 
 
 class Compose:
@@ -46,9 +46,10 @@ class ToMuspy:
                 track.is_drum = True
             song.tracks.append(track)
 
+        # quantize
         metadata = json.load(open(input_path.joinpath("metadata.json")))
-        song.time_signatures = get_time_signatures(metadata, song)
-        song.tempos = get_tempos(metadata, song)
+        song = MuspyWithMeasures(song, metadata)
+
         if self.to_file:
             song.write(self.output_path.joinpath(song_name + ".mid"))
 
