@@ -2,20 +2,40 @@ import os
 import shutil
 from pathlib import Path
 
-from src.processing.merge_tracks import merge_tracks
-from src.processing.utils import apply_func_to_dir
+import yaml
+from box import Box
 
-project_dir = Path(__file__).resolve().parents[0]
-annotations_folder = os.path.join(project_dir, "data", "annotations")
-raw_folder = os.path.join(project_dir, "data", "raw")
+from src.processing.transforms import Compose, ToMuspy  # , ToDataFrame, ToFeatures
 
-if os.path.exists(raw_folder):
-    shutil.rmtree(raw_folder)
+with open("config.yaml", "r") as file:
+    config = Box(yaml.safe_load(file))
 
-apply_func_to_dir(
-    func=merge_tracks,
-    project_dir=project_dir,
-    input_folder="annotations",
-    output_folder="raw",
-    filter=lambda files: len(files) > 1,
+cwd = Path.cwd()
+annotations_dir = cwd.joinpath(config.paths.annotations)
+raw_dir = cwd.joinpath(config.paths.raw)
+muspy_dir = cwd.joinpath(config.paths.muspy)
+dataframe_dir = cwd.joinpath(config.paths.dataframe)
+features_dir = cwd.joinpath(config.paths.features)
+
+
+if os.path.exists(raw_dir):
+    shutil.rmtree(raw_dir)
+if not os.path.exists(raw_dir):
+    os.makedirs(muspy_dir)
+if not os.path.exists(raw_dir):
+    os.makedirs(dataframe_dir)
+if not os.path.exists(raw_dir):
+    os.makedirs(features_dir)
+
+
+processing = Compose(
+    [
+        ToMuspy(to_file=True, output_path=muspy_dir),
+        # ToDataFrame(to_file=True),
+        # ToFeatures(to_file=True)
+    ]
 )
+
+for cur_path, directories, files in os.walk(annotations_dir):
+    if len(files) > 0:
+        processing(cur_path)
