@@ -5,7 +5,7 @@ from pathlib import Path
 import yaml
 from box import Box
 
-from src.processing.transforms import Compose, ToMuspy  # , ToDataFrame, ToFeatures
+from src.processing.transforms import Compose, ToDataFrame, ToFeatures, ToMuspy
 
 with open("config.yaml", "r") as file:
     config = Box(yaml.safe_load(file))
@@ -22,17 +22,18 @@ if os.path.exists(raw_dir):
     shutil.rmtree(raw_dir)
 if not os.path.exists(raw_dir):
     os.makedirs(muspy_dir)
-if not os.path.exists(raw_dir):
     os.makedirs(dataframe_dir)
-if not os.path.exists(raw_dir):
     os.makedirs(features_dir)
-
 
 processing = Compose(
     [
         ToMuspy(to_file=True, output_path=muspy_dir),
-        # ToDataFrame(to_file=True),
-        # ToFeatures(to_file=True)
+        ToDataFrame(to_file=True, output_path=dataframe_dir),
+        ToFeatures(
+            features_processing=config.features_processing,
+            to_file=True,
+            output_path=features_dir,
+        ),
     ]
 )
 

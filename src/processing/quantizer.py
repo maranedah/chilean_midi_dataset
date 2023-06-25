@@ -20,6 +20,7 @@ class MuspyWithMeasures(muspy.Music):
         self.time_signatures = self.get_time_signatures(metadata, song)
         self.measures = self.get_measures(song)
         self.tempos = self.get_tempos()
+        self.set_tempos()
 
     def get_time_signatures(self, metadata, song):
         prev_end_time = 0
@@ -55,16 +56,19 @@ class MuspyWithMeasures(muspy.Music):
         for ts, ts_next in zip(time_signatures, time_signatures[1:]):
             measures_length = int(song.resolution * (ts.numerator / ts.denominator))
             measure_times = range(ts.time, ts_next.time, measures_length)
-            measures = [
+            measures_ext = [
                 Measure(
                     index=i + j, time=time, length=measures_length, time_signature=ts
                 )
                 for i, time in enumerate(measure_times)
             ]
-            j += len(measures)
-            measures.extend(measures)
+            j += len(measures_ext)
+            measures.extend(measures_ext)
 
         return measures
+
+    def time_signature_str(self, ts):
+        return f"{ts.numerator}/{ts.denominator}"
 
     def get_tempos(self):
         tempos = [
@@ -75,10 +79,16 @@ class MuspyWithMeasures(muspy.Music):
         ]
         return tempos
 
+    def set_tempos(self):
+        tempo_times = np.array([t.time for t in self.tempos])
+        for m in self.measures:
+            tempo_index = np.searchsorted(tempo_times, m.time + 1, side="left") - 1
+            m.tempo = self.tempos[tempo_index]
+
     def time_to_measure(self, time):
-        index = np.searchsorted(self.measures, time + 1, side="left") - 1
-        relative_position = time - self.measures[index]
-        return index, relative_position
+        measure_times = np.array([m.time for m in self.measures])
+        index = np.searchsorted(measure_times, time + 1, side="left") - 1
+        return self.measures[index]
 
     def measure_to_time(self, measure):
         return self.measures[measure].time

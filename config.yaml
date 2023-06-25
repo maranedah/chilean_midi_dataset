@@ -4,3 +4,43 @@ paths:
   muspy: "data/raw/midi"
   dataframe: "data/raw/csv"
   features: "data/raw/npy"
+
+features_processing:
+  instrument:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
+  measure:
+    encoder:
+      name: "IdentityEncoder"
+      params: {}
+  relative_position:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
+  measure_length:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
+  duration:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
+  pitch:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
+  velocity:
+    encoder:
+      name: "RangeEncoder"
+      params:
+        range: 16
+  tempo:
+    encoder:
+      name: "RangeEncoder"
+      params:
+        range: 30
+  time_signature:
+    encoder:
+      name: "LabelEncoder"
+      params: {}
