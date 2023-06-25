@@ -5,7 +5,7 @@ class LabelEncoder:
         self.inverse_mapping = inverse_mapping
 
     def fit(self, labels):
-        unique_labels = list(set(labels))
+        unique_labels = list(set(labels) - set(self.label_mapping.keys()))
         prev_labels = list(self.label_mapping.keys())
         prev_labels.extend(unique_labels)
 

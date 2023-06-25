@@ -114,7 +114,7 @@ class ToFeatures:
                 data = json.load(f)
 
         labels = []
-        encoders = []
+        encoders = {}
         for feature_name in self.features_processing:
             feature = self.features_processing[feature_name]
             encoder = self.encoders_dict[feature.encoder.name](
@@ -124,14 +124,10 @@ class ToFeatures:
             )
             feature_labels = encoder.fit_transform(df[feature_name])
             labels.append(feature_labels)
-            encoders.append(
-                {
-                    feature_name: {
-                        "label_mapping": encoder.label_mapping,
-                        "inverse_mapping": encoder.inverse_mapping,
-                    }
-                }
-            )
+            encoders[feature_name] = {
+                "label_mapping": encoder.label_mapping,
+                "inverse_mapping": encoder.inverse_mapping,
+            }
 
         with open("encoders.json", "w") as f:
             json.dump(encoders, f)
