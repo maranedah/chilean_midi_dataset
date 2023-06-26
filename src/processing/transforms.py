@@ -14,9 +14,9 @@ class Compose:
     def __init__(self, transforms):
         self.transforms = transforms
 
-    def __call__(self, data):
+    def __call__(self, data, filename):
         for t in self.transforms:
-            data = t(data)
+            data = t(data, filename)
         return data
 
 
@@ -25,9 +25,8 @@ class ToMuspy:
         self.to_file = to_file
         self.output_path = PurePath(output_path)
 
-    def __call__(self, path):
+    def __call__(self, path, song_name):
         input_path = PurePath(path)
-        song_name = f"{input_path.parent.parent.name} - {input_path.name}"
         files = [
             input_path.joinpath(f)
             for f in os.listdir(input_path)
@@ -64,7 +63,7 @@ class ToDataFrame:
         self.to_file = to_file
         self.output_path = PurePath(output_path)
 
-    def __call__(self, data):
+    def __call__(self, data, song_name):
         df = pd.DataFrame(
             [
                 {
@@ -87,10 +86,9 @@ class ToDataFrame:
                 for note in track.notes
             ]
         )
+        df = df.sort_values(by=["time", "instrument"])
         if self.to_file:
-            df.to_csv(
-                self.output_path.joinpath(data.metadata.title + ".csv"), index=False
-            )
+            df.to_csv(self.output_path.joinpath(song_name + ".csv"), index=False)
         return df
 
 
@@ -105,7 +103,7 @@ class ToFeatures:
             "RangeEncoder": RangeEncoder,
         }
 
-    def __call__(self, data):
+    def __call__(self, data, song_name):
         df = data[self.features_processing]
 
         data = None
@@ -133,4 +131,9 @@ class ToFeatures:
             json.dump(encoders, f)
 
         features = np.vstack(labels).T
+        np.save(
+            file=self.output_path.joinpath(song_name + ".npy"),
+            arr=features,
+            allow_pickle=True,
+        )
         return features

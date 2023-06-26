@@ -1,6 +1,6 @@
 import os
 import shutil
-from pathlib import Path
+from pathlib import Path, PurePath
 
 import yaml
 from box import Box
@@ -39,4 +39,6 @@ processing = Compose(
 
 for cur_path, directories, files in os.walk(annotations_dir):
     if len(files) > 0:
-        processing(cur_path)
+        input_path = PurePath(cur_path)
+        song_name = f"{input_path.parent.parent.name} - {input_path.name}"
+        processing(data=cur_path, filename=song_name)
