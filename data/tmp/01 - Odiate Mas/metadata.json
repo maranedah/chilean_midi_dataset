@@ -1,0 +1,16 @@
+{
+	"tempos":[
+		{"tempo":160, "measure":1}
+	],
+	"time_signatures":[
+		{"time_signature":"4/4", "measure":1}
+	],
+	"key": "Bb",
+	"intruments":[
+		"bass",
+		"guitar1",
+		"guitar2",
+		"voice",
+		"drums"
+	]
+}
