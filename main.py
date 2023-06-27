@@ -20,10 +20,13 @@ features_dir = cwd.joinpath(config.paths.features)
 
 if os.path.exists(raw_dir):
     shutil.rmtree(raw_dir)
+if os.path.exists("encoders.json"):
+    os.remove("encoders.json")
 if not os.path.exists(raw_dir):
     os.makedirs(muspy_dir)
     os.makedirs(dataframe_dir)
     os.makedirs(features_dir)
+
 
 processing = Compose(
     [
