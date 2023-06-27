@@ -7,12 +7,10 @@ class LabelEncoder:
     def fit(self, labels):
         unique_labels = list(set(labels) - set(self.label_mapping.keys()))
         prev_labels = list(self.label_mapping.keys())
-        prev_labels.extend(unique_labels)
 
-        for idx, label in enumerate(prev_labels):
-            if label not in self.label_mapping.keys():
-                self.label_mapping[label] = idx
-                self.inverse_mapping[idx] = label
+        for idx, label in enumerate(unique_labels):
+            self.label_mapping[label] = len(prev_labels) + idx
+            self.inverse_mapping[idx] = label
         return self
 
     def transform(self, labels):
