@@ -40,5 +40,3 @@ The Chilean Song Annotation Project is licensed under the GNU General Public Lic
 Under the terms of the GPL, you are free to use, modify, and distribute the dataset, as long as you adhere to the license requirements. This includes sharing the source code, annotations, and any changes you make to the dataset when distributing it.
 
 If you have any questions, suggestions, or feedback regarding the project, please don't hesitate to reach out to the maintainers or open an issue on the GitHub repository.
-
-Happy exploring and analyzing Chilean music!
