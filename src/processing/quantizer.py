@@ -40,7 +40,9 @@ class MuspyWithMeasures(muspy.Music):
                 )
             )
             n_measures = ts_next["measure"] - ts["measure"]
-            prev_end_time += song.resolution * (numerator / denominator) * n_measures
+            prev_end_time += (
+                (song.resolution * 4) * (numerator / denominator) * n_measures
+            )
 
         return time_signatures
 
@@ -54,7 +56,9 @@ class MuspyWithMeasures(muspy.Music):
         measures = []
         j = 0
         for ts, ts_next in zip(time_signatures, time_signatures[1:]):
-            measures_length = int(song.resolution * (ts.numerator / ts.denominator))
+            measures_length = int(
+                (song.resolution * 4) * (ts.numerator / ts.denominator)
+            )
             measure_times = range(ts.time, ts_next.time, measures_length)
             measures_ext = [
                 Measure(
