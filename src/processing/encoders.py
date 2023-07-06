@@ -6,17 +6,15 @@ class LabelEncoder:
 
     def fit(self, labels):
         unique_labels = list(set(labels) - set(self.label_mapping.keys()))
-        # unique_labels = [str(x) for x in unique_labels]
         prev_labels = [x for x in self.label_mapping.keys()]
-
-        for idx, label in enumerate(unique_labels):
+        i = 0
+        for label in unique_labels:
             if str(label) not in prev_labels:
-                # print("unique", unique_labels)
-                # print("prev", prev_labels)
-                # breakpoint()
-                self.label_mapping[str(label)] = len(prev_labels) + idx
-                self.inverse_mapping[idx] = label
-        # print(self.label_mapping)
+                self.label_mapping[str(label)] = len(prev_labels) + i
+                self.inverse_mapping[len(prev_labels) + i] = label
+                i+=1
+        print(self.label_mapping)
+        
         return self
 
     def transform(self, labels):
@@ -26,6 +24,7 @@ class LabelEncoder:
         return encoded_labels
 
     def inverse_transform(self, encoded_labels):
+        
         original_labels = []
         for encoded_label in encoded_labels:
             original_labels.append(self.inverse_mapping[str(encoded_label)])

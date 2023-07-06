@@ -10,10 +10,10 @@ features_processing:
     encoder:
       name: "LabelEncoder"
       params: {}
-  measure:
-    encoder:
-      name: "IdentityEncoder"
-      params: {}
+  #measure:
+  #  encoder:
+  #    name: "IdentityEncoder"
+  #    params: {}
   relative_position:
     encoder:
       name: "LabelEncoder"

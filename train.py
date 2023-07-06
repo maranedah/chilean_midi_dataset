@@ -4,16 +4,16 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from src.models.music_generation import RNNModel
+from src.models.music_generation.RNNModel import RNNModel
 
+
+encoder = json.load(open("encoders.json"))
 # Set the dimensions
-
-data = json.load(open("encoders.json"))
-
-
 output_size = [
-    len(data[feature_labels]["label_mapping"].keys()) for feature_labels in data.keys()
-]
+            len(encoder[feature_labels]["label_mapping"].keys()) 
+            for feature_labels in encoder.keys()
+        ]
+
 input_size = len(output_size)
 hidden_size = 512
 
@@ -21,8 +21,9 @@ hidden_size = 512
 # output_size = [3,3,3,3,3,3,3,3,3]
 
 # Create an instance of the model
+
 model = RNNModel(input_size, hidden_size, output_size)
-model = model.cuda("cuda:0")
+#model = model.cuda("cuda:0")
 
 # Convert the data to PyTorch tensors
 input_sequences = (
@@ -30,8 +31,20 @@ input_sequences = (
         np.load("data/raw/npy/Super Especial - 03 - Evasiva.npy"), dtype=torch.float32
     )
     .unsqueeze(0)
-    .cuda()
+    #.cuda()
 )
+
+input_sequences = (
+    torch.tensor(
+        np.load("data/raw/npy/Super Especial - 04 - Los Fantasmas.npy"), dtype=torch.float32
+    )
+    .unsqueeze(0)
+    #.cuda()
+)
+
+
+
+model.fit(input_sequences)
 # target_sequences = torch.tensor(target_sequences, dtype=torch.float32)
 
 # Set the loss function and optimizer
@@ -46,22 +59,17 @@ for epoch in range(num_epochs):
     hidden = None
     for i in range(0, input_sequences.shape[1] - batch_size - 1, batch_size):
         inputs = input_sequences[:, i + batch_size]
-        targets = input_sequences[:, i + batch_size + 1]
-        # print(inputs)
-        # print(targets)
+        targets = input_sequences[:, i + batch_size + 1] # target = next token
         optimizer.zero_grad()
         outputs, hidden = model(inputs, hidden)
 
-        # loss = criterion(outputs.view(-1, output_size), targets.view(1, -1))
         losses = []
         for j, output in enumerate(outputs):
-            # breakpoint()
             loss = criterion(
                 output.view(-1, output_size[j]), targets[:, j].view(-1).long()
             )
             losses.append(loss)
         loss = sum(losses)
-        # print(outputs.view(-1, output_size))
 
         loss.backward()
         optimizer.step()

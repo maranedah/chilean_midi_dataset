@@ -44,12 +44,12 @@ processing = Compose(
             to_file=True,
             output_path=features_dir,
         ),
-        BackToDataFrame(
-            features_processing=config.features_processing,
-            to_file=True,
-            output_path=muspy_dir,
-        ),
-        BackToMidi(to_file=True, output_path=muspy_dir),
+        #BackToDataFrame(
+        #    features_processing=config.features_processing,
+        #    to_file=True,
+        #    output_path=muspy_dir,
+        #),
+        #BackToMidi(to_file=True, output_path=muspy_dir),
     ]
 )
 

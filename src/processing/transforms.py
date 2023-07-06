@@ -104,7 +104,7 @@ class ToFeatures:
         }
 
     def __call__(self, data, song_name):
-        df = data[self.features_processing]
+        df = data[self.features_processing.keys()]
 
         data = None
         if os.path.exists("encoders.json"):
@@ -113,7 +113,7 @@ class ToFeatures:
 
         labels = []
         encoders = {}
-        for feature_name in self.features_processing:
+        for feature_name in self.features_processing.keys():
             feature = self.features_processing[feature_name]
             encoder = self.encoders_dict[feature.encoder.name](
                 label_mapping=data[feature_name]["label_mapping"] if data else {},
@@ -153,7 +153,6 @@ class BackToDataFrame:
             self.encoders_data = json.load(f)
 
         df = pd.DataFrame(data, columns=self.features_processing.keys())
-
         for feature_name in self.features_processing.keys():
             feature = self.features_processing[feature_name]
             encoder = self.encoders_dict[feature.encoder.name](
@@ -223,4 +222,3 @@ class BackToMidi:
             song.tracks.append(track)
 
         song.write("file.mid")
-        breakpoint()
